@@ -1,11 +1,14 @@
 import React from 'react'
 import {BrowserRouter as Router,Routes,Route,Link} from 'react-router-dom'
 import { Layout, Typography, Space } from 'antd'
+import { Provider } from 'react-redux'
+import store from './app/store'
 import { Navbar,Exchanges,Homepage,Cryptocurrencies,CryptoDetails,News,Footer } from './components'
 import './App.css'
 const App = () => {
     return (
-      <Router>
+        <Router>
+            <Provider store={store}>
       <div className="app">
           <div className="navbar">
               <Navbar/>
@@ -36,7 +39,8 @@ const App = () => {
                     <Footer/>
                     </div>
                     </div>
-            </div>
+                </div>
+                </Provider>
         </Router>
   )
 }
