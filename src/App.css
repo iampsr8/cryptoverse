@@ -289,7 +289,12 @@ a:hover{
 
 .select-news{
     width: 180px;
+    /* margin-bottom:100px */
 }
+.news-search{
+    margin-bottom:20px
+}
+
 .news-card{
     min-height: 300px !important;
 }
