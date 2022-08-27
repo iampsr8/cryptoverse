@@ -10,7 +10,7 @@ const Footer = () => {
         level={5}
         style={{ color: "white", textAlign: "center" }}
       >
-        &copy;{footerYear} Prateek Rath
+        &copy;{footerYear} Prateek Rath . CryptoVerse
       </Typography.Title>
       <Space>
         <a href="https://www.linkedin.com/in/prateek-rath-9a9779219/">
