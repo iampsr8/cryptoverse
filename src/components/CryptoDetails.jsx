@@ -4,7 +4,8 @@ import { useParams } from 'react-router-dom'
 import millify from 'millify'
 import { Row, Col, Typography, Select } from 'antd'
 import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
-import { useGetCryptoDetailsQuery } from '../services/cryptoAPI'
+import { useGetCryptoDetailsQuery,useGetCryptoHistoryQuery } from '../services/cryptoAPI'
+import LineChart from './LineChart'
 
 const { Title, Text } = Typography
 const {Option}=Select
@@ -13,17 +14,21 @@ const CryptoDetails = () => {
   const { coinId } = useParams()
   const [timePeriod, setTimePeriod] = useState('7d')
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId)
-  const cryptoDetails=data?.data?.coin
+  const { data:coinHistory} = useGetCryptoHistoryQuery({coinId,timePeriod})
+  const cryptoDetails = data?.data?.coin
+  if (isFetching) return 'Loading...'
+ 
   
-  console.log(data)
-  console.log(coinId)
-  console.log(data)
-  console.log(cryptoDetails)
+  // console.log(data)
+  // console.log(coinId)
+  // console.log(data)
+  // console.log(cryptoDetails)
+  console.log(coinHistory)
 
   const time = ['3h', '24h', '7d', '30d', '1y', '3m', '3y', '5y'];
 
   const volume = cryptoDetails["24hVolume"];
-  console.log(volume)
+  // console.log(volume)
   const stats = [
     { title: 'Price to USD', value: `$ ${cryptoDetails?.price && millify(cryptoDetails?.price)}`, icon: <DollarCircleOutlined /> },
     { title: 'Rank', value: cryptoDetails?.rank, icon: <NumberOutlined /> },
@@ -40,7 +45,7 @@ const CryptoDetails = () => {
     { title: 'Circulating Supply', value: `$ ${cryptoDetails?.supply?.circulating && millify(cryptoDetails?.supply?.circulating)}`, icon: <ExclamationCircleOutlined /> },
   ];
 
-  if(isFetching)return 'Loading...'
+
   return (
     <Col className='coin-detail-container'>
       <Col className='coin-heading-container'>
@@ -55,29 +60,29 @@ const CryptoDetails = () => {
       <Select defaultValue="7d" className='select-timeperiod' placeholder='Select Time Period' onChange={(value) => setTimePeriod(value)}>
         {time.map((date) => <Option key={date}>{ date}</Option>)}
       </Select>
-      {/* line chart */}
+      <LineChart coinHistory={ coinHistory} currentPrice={millify(cryptoDetails.price)} coinName={cryptoDetails.name} />
       <Col className='stats-container'>
         <Col className='coin-value-statistics'>
           <Col className='coin-value-statistics-heading'>
             <Title level={3} className='coin-details-heading'>{ cryptoDetails.name} Value Statistics</Title>
-            <p>An overview showing the stats of { cryptoDetails.name}</p>
+            <p>An overview showing the statistics of {cryptoDetails.name}, such as the base and quote currency, the rank, and trading volume.</p>
           </Col>
           {stats.map(({ icon, title, value }) => (
-            <Col className='coin-stats'>
+            <Col className='coin-stats' >
               <Col className='coin-stats-name'>
                 <Text>{ icon}</Text>
                 <Text>{ title}</Text>
               </Col>
-              <Text className='stats'>{ value}</Text>
+              <Text className='stats' >{ value}</Text>
             </Col>
           ))}
         </Col>
         <Col className='other-stats-info'>
           <Col className='coin-value-statistics-heading'>
             <Title level={3} className='coin-details-heading'>Other Statistics</Title>
-            <p>An overview showing the stats of all cryptocurrencies</p>
+            <p>An overview showing the stats of all other Cryptos such as the base and quote currency, the rank, and trading volume.</p>
           </Col>
-          {genericStats.map(({ icon, title, value }) => (
+          {genericStats.map(({ icon, title, value}) => (
             <Col className='coin-stats'>
               <Col className='coin-stats-name'>
                 <Text>{ icon}</Text>
@@ -99,8 +104,8 @@ const CryptoDetails = () => {
           <Title level={3} className='coin-details-heading'>
             {cryptoDetails.name} Links
           </Title>
-          {cryptoDetails.links.map((link) => (
-            <Row className='coin-link' key={link.name}>
+          {cryptoDetails.links.map((link,i) => (
+            <Row className='coin-link' key={i}>
               <Title level={5} className='link-name'>
                 {link.type}
               </Title>
