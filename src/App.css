@@ -54,6 +54,15 @@ a:hover{
 .logo{
     margin:0 0 0 15px;
 }
+.custom{
+    /* margin-bottm:-0.5rem !important */
+    /* font-family:'Roboto'; */
+    margin-bottom: 0.3rem;
+    font-size:30px;
+    color: #008ae6 !important;
+    font-weight: 600;
+    line-height: 1.35
+}
 .logo a{
    color: white;
 }
