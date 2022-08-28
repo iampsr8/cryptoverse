@@ -13,7 +13,7 @@ const demoImage='https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News
 const News = ({ simplified }) => {
   const [newsCategory,setNewsCategory]=useState('Cryptocurrency')
   const { data: cryptoNews } = useGetCryptoNewsQuery({ newsCategory: newsCategory, count: simplified ? 6 : 16 })
-  console.log(cryptoNews)
+  // console.log(cryptoNews)
   const { data } = useGetCryptosQuery(100)
   
 
