@@ -6,6 +6,7 @@ import { Row, Col, Typography, Select } from 'antd'
 import { MoneyCollectOutlined, DollarCircleOutlined, FundOutlined, ExclamationCircleOutlined, StopOutlined, TrophyOutlined, CheckOutlined, NumberOutlined, ThunderboltOutlined } from '@ant-design/icons';
 import { useGetCryptoDetailsQuery,useGetCryptoHistoryQuery } from '../services/cryptoAPI'
 import LineChart from './LineChart'
+import Loader from './Loader'
 
 const { Title, Text } = Typography
 const {Option}=Select
@@ -16,7 +17,9 @@ const CryptoDetails = () => {
   const { data, isFetching } = useGetCryptoDetailsQuery(coinId)
   const { data:coinHistory} = useGetCryptoHistoryQuery({coinId,timePeriod})
   const cryptoDetails = data?.data?.coin
-  if (isFetching) return 'Loading...'
+
+  //spinner component
+  if (isFetching) return <Loader/>
  
   
   // console.log(data)
