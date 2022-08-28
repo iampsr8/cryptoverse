@@ -1,6 +1,6 @@
 import React from 'react'
-import {BrowserRouter as Router,Routes,Route,Link} from 'react-router-dom'
-import { Layout, Typography, Space } from 'antd'
+import {BrowserRouter as Router,Routes,Route} from 'react-router-dom'
+import { Layout} from 'antd'
 import { Provider } from 'react-redux'
 import store from './app/store'
 import { Navbar,Exchanges,Homepage,Cryptocurrencies,CryptoDetails,News,Footer } from './components'
